@@ -1,5 +1,5 @@
 function [ assembly, masses, totVolSph, mI ] = populateSpheres( fileName, nNodes, scaleFactor, smoothFact, writeTec, ...
-                                                                writeLammpsTemp, lammpsType, writeStlScaled, rho )
+                                                                writeLammpsTemp, lammpsType, writeStlScaled, rho, findSTLmI )
 %=========================================================================%
 %Copyright 2017 Sina Haeri                                                %
 %This program is distributed under the terms of the GNU General Public    %  
@@ -33,6 +33,9 @@ function [ assembly, masses, totVolSph, mI ] = populateSpheres( fileName, nNodes
 %template, see lammps documentation for more details)
 %writeStlScaled: if = 1, the scaled stl will be written
 %rho: assumed density of the particle
+%findSTLmI: 0 or 1, if 0 the Moment of Inertia for the STL is not
+%calculated, this is very time consuming so default to 0, also only useful
+%for comparison.
 %--------------------------------------------------------------------------
 %OUTPUTS:
 %assembly: coordinate and the radius of the spheres in the final cluster
@@ -95,7 +98,6 @@ end
 %Just for testing a very simple crude Monte Carlo algorithm to calculte mI
 %of the original STL, set findSTLmI to zero since this may take very long
 %specially if the stl is not convex
-findSTLmI = 1;
 [stlVol,~] = stlVolume(vertices',faces');
 %stlMass = stlVol*rho;
 if(findSTLmI) 
@@ -420,10 +422,11 @@ end
 
 mI = cellMass*mI;
 
-display('MI of the cluster: ');
-display(num2str(mI)); 
-display('MI of the STL: ');
-display(num2str(STLmI));
+display(['MI of the cluster: ' num2str(mI)]);
+if(findSTLmI)
+    display(['MI of the STL: ' num2str(STLmI)]);
+end
+
 display(['CoM of the cluster: ' num2str(CoM') ' , CoM of the STL: ' num2str(STLCoM')]);
 display(['CoM of the cluster after shifting: ' num2str(CoMShifted')]);
 
