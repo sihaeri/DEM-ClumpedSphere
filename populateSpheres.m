@@ -430,8 +430,10 @@ if(findSTLmI)
     display(STLmI);
 end
 
-display(['CoM of the cluster: ' num2str(CoM') ...
-         ' , CoM of the STL: ' num2str(STLCoM')]);
+display(['CoM of the cluster: ' num2str(CoM')])
+if(findSTLmI)
+    display(['CoM of the STL: ' num2str(STLCoM')]);
+end
      
 display(['CoM of the cluster after shifting: ' num2str(CoMShifted')]);
 
