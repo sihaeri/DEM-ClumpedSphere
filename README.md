@@ -12,7 +12,7 @@ If any publication is resulted from using this code, please cite:
 No installation is required, however, the code relies on the following two libraries
  1. Ray/Triangle Intersection version 1.0 (https://uk.mathworks.com/matlabcentral/profile/authors/1927554-jesus-p-mena-chalco)
  ___
- **Important**
+ **Important
  This function relies on a epsilon value set on the first line as epsilon = 0.00001;
  However this is not very accurate for this application, So you need to change the definition of the function
  rayTriangleIntersection by adding another argumenr myEps and set epsilon = myEps
