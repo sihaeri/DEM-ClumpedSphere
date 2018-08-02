@@ -11,11 +11,8 @@ If any publication is resulted from using this code, please cite:
 ## Installation
 
 No installation is required, however, the code relies on the following two libraries
- 1. Ray/Triangle Intersection version 1.0 (https://uk.mathworks.com/matlabcentral/profile/authors/1927554-jesus-p-mena-chalco)
-
- **Important**
- 
- This function relies on an epsilon value set on the first line as `epsilon = 0.00001`;
+ 1. Ray/Triangle Intersection version 1.0 (https://uk.mathworks.com/matlabcentral/profile/authors/1927554-jesus-p-mena-chalco)  
+ **Important**  This function relies on an epsilon value set on the first line as `epsilon = 0.00001`;
  However, this is not accurate enough for this application, So you need to modify the definition of the function
  `rayTriangleIntersection` by adding another argument `myEps` (as the last) and set `epsilon = myEps`
 
