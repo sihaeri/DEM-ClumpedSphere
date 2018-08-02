@@ -447,8 +447,8 @@ end
 
 if(writeTec)
     n = nRayZ*nRayY*(nNodes+1);
-    zName = [filepath zBaseName '_BBoxSpheres'];
-    tecFid2=fopen([zName '.plt'],'w');
+    zName = fullfile(filepath,[zBaseName '_BBoxSpheres' '.plt']);
+    tecFid2=fopen(zName,'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" ' );
     fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zBaseName, ...
@@ -469,8 +469,8 @@ if(writeTec)
     end
     
     fclose(tecFid2);
-    zName = [filepath zBaseName '_STLDicrete'];
-    tecFid2=fopen([zName '.plt'],'w');
+    zName = fullfile(filepath,[zBaseName '_STLDicrete' '.plt']);
+    tecFid2=fopen(zName,'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" "color"' );
     fprintf(tecFid2,'%s %s %s %d %s %d %s %d %s\n','ZONE T="',...
@@ -503,8 +503,8 @@ if(writeTec)
     
     fclose(tecFid2);
     
-    zName = [filepath zBaseName '_STLDicrete'];
-    tecFid2=fopen([zName '.vtk'],'w');
+    zName = fullfile(filepath,[zBaseName '_STLDicrete' '.vtk']);
+    tecFid2=fopen(zName,'w');
     fprintf(tecFid2,'# vtk DataFile Version 2.0\n');
     fprintf(tecFid2,[zBaseName '\n']);
     fprintf(tecFid2,'ASCII\n');
@@ -551,8 +551,8 @@ if(writeTec)
     
     fclose(tecFid2);
     
-    zName = [filepath zBaseName '_Cluster'];
-    tecFid2=fopen([zName '.plt'],'w');
+    zName = fullfile(filepath,[zBaseName '_Cluster' '.plt']);
+    tecFid2=fopen(zName,'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" ' );
     fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zBaseName, ...
@@ -566,8 +566,8 @@ if(writeTec)
 end
 
 if(writeLammpsTemp)
-    zName = [filepath zBaseName '_Cluster'];
-    tecFid2=fopen([zName '.lammps'],'w');
+    zName = fullfile(filepath,[zBaseName '_Cluster' '.lammps']);
+    tecFid2=fopen(zName,'w');
     fprintf(tecFid2,'#%s\n',zBaseName);
     fprintf(tecFid2,'%d %s\n',nclSph,'atoms');
     fprintf(tecFid2,'%16.10e %16.10e %16.10e %s\n',CoMShifted','com');
