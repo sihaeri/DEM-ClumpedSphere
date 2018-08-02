@@ -14,9 +14,9 @@ No installation is required, however, the code relies on the following two libra
  ___
  **Important**
  
- This function relies on a epsilon value set on the first line as epsilon = 0.00001;
+ This function relies on a epsilon value set on the first line as `epsilon = 0.00001`;
  However this is not very accurate for this application, So you need to change the definition of the function
- rayTriangleIntersection by adding another argumenr myEps and set epsilon = myEps
+ `rayTriangleIntersection` by adding another argumenr `myEps` (as the last) and set `epsilon = myEps`
  ___
  2. stlTools version 1.1 (https://uk.mathworks.com/matlabcentral/profile/authors/402762-pau-mico)
 
