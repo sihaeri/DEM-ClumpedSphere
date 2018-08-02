@@ -422,9 +422,12 @@ end
 
 mI = cellMass*mI;
 
-display(['MI of the cluster: ' num2str(mI)]);
+display('MI of the cluster: ');
+display(mI);
+
 if(findSTLmI)
-    display(['MI of the STL: ' num2str(STLmI)]);
+    display('MI of the STL: ');
+    display(STLmI);
 end
 
 display(['CoM of the cluster: ' num2str(CoM') ...
