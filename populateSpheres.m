@@ -427,23 +427,28 @@ if(findSTLmI)
     display(['MI of the STL: ' num2str(STLmI)]);
 end
 
-display(['CoM of the cluster: ' num2str(CoM') ' , CoM of the STL: ' num2str(STLCoM')]);
+display(['CoM of the cluster: ' num2str(CoM') ...
+         ' , CoM of the STL: ' num2str(STLCoM')]);
+     
 display(['CoM of the cluster after shifting: ' num2str(CoMShifted')]);
 
-fName = strsplit(fileName,'.');
-zBaseName = [fName{1} num2str(smoothFact)];
+[filepath,fName,ext] = fileparts(fileName);
+zBaseName = [fName '_SF' num2str(smoothFact)];
 if(writeStlScaled)
-    stlWrite([fName{1} 'Scaled.' fName{2}],faces,bsxfun(@minus,vertices,CoM'),'mode','ascii','title',fName{1})
+    stlWrite([filepath fName 'Scaled' ext],faces, ...
+                                           bsxfun(@minus,vertices,CoM'), ...
+                                           'mode','ascii','title',fName{1})
 end
 
 if(writeTec)
     n = nRayZ*nRayY*(nNodes+1);
-    zName = [zBaseName 'BBoxSpheres'];
+    zName = [filepath zBaseName '_BBoxSpheres'];
     tecFid2=fopen([zName '.plt'],'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" ' );
-    fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zName,'" , STRANDID=',1, ...
-        ' ,I=',n,' ZONETYPE=Ordered ,DATAPACKING=POINT');
+    fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zBaseName, ...
+            '" , STRANDID=',1,' ,I=',n, ...
+            ' ZONETYPE=Ordered ,DATAPACKING=POINT');
     
     for k = 1:nRayZ
         for j = 1:nRayY
@@ -459,12 +464,13 @@ if(writeTec)
     end
     
     fclose(tecFid2);
-    zName = [zBaseName 'STLDicrete'];
+    zName = [filepath zBaseName '_STLDicrete'];
     tecFid2=fopen([zName '.plt'],'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" "color"' );
-    fprintf(tecFid2,'%s %s %s %d %s %d %s %d %s\n','ZONE T="',zName,'" , STRANDID=',1, ...
-        ' ,NODES=',8*nSph, ', ELEMENTS=' , nSph, ' ZONETYPE=FEBRICK ,DATAPACKING=POINT');
+    fprintf(tecFid2,'%s %s %s %d %s %d %s %d %s\n','ZONE T="',...
+            zBaseName,'" , STRANDID=',1,' ,NODES=',8*nSph, ...
+            ', ELEMENTS=' , nSph, ' ZONETYPE=FEBRICK ,DATAPACKING=POINT');
     
     for k = 1:nSph
         fprintf(tecFid2,['%16.10f %16.10f %16.10f %16.10f %d' '\n'],...
@@ -492,24 +498,32 @@ if(writeTec)
     
     fclose(tecFid2);
     
-    zName = [zBaseName 'STLDicrete'];
+    zName = [filepath zBaseName '_STLDicrete'];
     tecFid2=fopen([zName '.vtk'],'w');
     fprintf(tecFid2,'# vtk DataFile Version 2.0\n');
-    fprintf(tecFid2,[zName '\n']);
+    fprintf(tecFid2,[zBaseName '\n']);
     fprintf(tecFid2,'ASCII\n');
     fprintf(tecFid2,'DATASET UNSTRUCTURED_GRID\n');
     fprintf(tecFid2,'\nPOINTS %d float\n', 8*nSph);
     
     for k = 1:nSph
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[-rSph;-rSph;-rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[rSph;-rSph;-rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[-rSph;rSph;-rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[rSph;rSph;-rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[-rSph;-rSph;-rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[rSph;-rSph;-rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[-rSph;rSph;-rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[rSph;rSph;-rSph]);
         
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[-rSph;-rSph;rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[rSph;-rSph;rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[-rSph;rSph;rSph]);
-        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',cellCentres(:,k)+[rSph;rSph;rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[-rSph;-rSph;rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[rSph;-rSph;rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[-rSph;rSph;rSph]);
+        fprintf(tecFid2,'%16.10e %16.10e %16.10e\n',...
+                cellCentres(:,k)+[rSph;rSph;rSph]);
     end
 
     fprintf(tecFid2,'\nCELLS %d %d\n', nSph, 9*nSph);
@@ -532,12 +546,13 @@ if(writeTec)
     
     fclose(tecFid2);
     
-    zName = [zBaseName 'Cluster'];
+    zName = [filepath zBaseName '_Cluster'];
     tecFid2=fopen([zName '.plt'],'w');
     fprintf(tecFid2,'%s\n','Variables=');
     fprintf(tecFid2,'%s \n', ' "x" "y" "z" "d" ' );
-    fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zName,'" , STRANDID=',1, ...
-        ' ,I=',nclSph,' ZONETYPE=Ordered ,DATAPACKING=POINT');
+    fprintf(tecFid2,'%s %s %s %d %s %d %s \n','ZONE T="',zBaseName, ...
+            '" , STRANDID=',1, ' ,I=',nclSph,...
+            ' ZONETYPE=Ordered ,DATAPACKING=POINT');
     
     fprintf(tecFid2,'%16.10f %16.10f %16.10f %16.10f\n',assembly);
         
@@ -546,20 +561,23 @@ if(writeTec)
 end
 
 if(writeLammpsTemp)
-    zName = [zBaseName 'Cluster'];
+    zName = [filepath zBaseName '_Cluster'];
     tecFid2=fopen([zName '.lammps'],'w');
     fprintf(tecFid2,'#%s\n',zBaseName);
     fprintf(tecFid2,'%d %s\n',nclSph,'atoms');
     fprintf(tecFid2,'%16.10e %16.10e %16.10e %s\n',CoMShifted','com');
-    fprintf(tecFid2,[repmat('%16.10e ',1,6) ' %s\n'],mI([1 5 9 2 3 6]),'inertia');
+    fprintf(tecFid2,[repmat('%16.10e ',1,6) ' %s\n'],...
+            mI([1 5 9 2 3 6]),'inertia');
     fprintf(tecFid2,'%16.10e %s\n\n',totMass,'mass');
     
     sz = size(assembly);
     fprintf(tecFid2,'Coords\n\n');
-    fprintf(tecFid2,'%d %16.10e %16.10e %16.10e\n',[linspace(1,sz(2),sz(2));assembly(1:3,:)]);
+    fprintf(tecFid2,'%d %16.10e %16.10e %16.10e\n',...
+            [linspace(1,sz(2),sz(2));assembly(1:3,:)]);
     
     fprintf(tecFid2,'\nTypes\n\n');
-    fprintf(tecFid2,'%d %d\n',[linspace(1,sz(2),sz(2));lammpsType*ones(1,sz(2))]);
+    fprintf(tecFid2,'%d %d\n',[linspace(1,sz(2),sz(2)); ...
+                               lammpsType*ones(1,sz(2))]);
     
     fprintf(tecFid2,'\nDiameters\n\n');
     fprintf(tecFid2,'%d %16.10e\n',[linspace(1,sz(2),sz(2));assembly(4,:)]);
@@ -664,4 +682,3 @@ end
 
 mySamples = samples;
 end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
