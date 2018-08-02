@@ -440,9 +440,9 @@ display(['CoM of the cluster after shifting: ' num2str(CoMShifted')]);
 [filepath,fName,ext] = fileparts(fileName);
 zBaseName = [fName '_SF' num2str(smoothFact)];
 if(writeStlScaled)
-    stlWrite([filepath fName 'Scaled' ext],faces, ...
+    stlWrite(fullfile(filepath,[fName '_Scaled' ext]),faces, ...
                                            bsxfun(@minus,vertices,CoM'), ...
-                                           'mode','ascii','title',fName{1})
+                                           'mode','ascii','title',fName)
 end
 
 if(writeTec)
@@ -686,4 +686,4 @@ while ncSamples < myNumSamples
 end
 
 mySamples = samples;
-e
+end
