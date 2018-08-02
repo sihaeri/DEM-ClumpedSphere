@@ -21,7 +21,7 @@ function [ assembly, masses, totVolSph, mI ] = populateSpheres( fileName, nNodes
 %fileName: name of the STL file to be loaded. 
 %nNodes: number of nodes to be placed along each axis (e.g. start with 50).  
 %scaleFactor: scaling factor to normalise all coordinated in the STL file.
-%scaleFactor: how much smoothing to apply to the surfce, this factor will
+%smoothFact: how much smoothing to apply to the surfce, this factor will
 %be multiplied by the cell radius to smoothout the surface, if 1. is chosen
 %then no smoothing and large number of spheres will be included in the
 %final cluster to represent surface roughness (3-5 seems to be reasonable,
