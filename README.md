@@ -12,11 +12,12 @@ If any publication is resulted from using this code, please cite:
 
 No installation is required, however, the code relies on the following two libraries
  1. Ray/Triangle Intersection version 1.0 (https://uk.mathworks.com/matlabcentral/profile/authors/1927554-jesus-p-mena-chalco)  
- ***Important***  
+ 2. Stl volume calculation versio 1.0 (https://uk.mathworks.com/matlabcentral/fileexchange/26982-volume-of-a-surface-triangulation) 
+***Important***  
  This function relies on an epsilon value set on the first line as `epsilon = 0.00001`;
  However, this is not accurate enough for this application, So you need to modify the definition of the function
  `rayTriangleIntersection` by adding another argument `myEps` (as the last) and set `epsilon = myEps`  
- 2. stlTools version 1.1 (https://uk.mathworks.com/matlabcentral/profile/authors/402762-pau-mico)
+ 3. stlTools version 1.1 (https://uk.mathworks.com/matlabcentral/profile/authors/402762-pau-mico)
 
 ## Features
  1. Can write the clumped-sphere assembly in TECPLOT format for visualisation.
