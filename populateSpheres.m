@@ -14,22 +14,22 @@ function [ assembly, masses, totVolSph, mI ] = populateSpheres( fileName, nNodes
 %and is not intended to be used directly. The next step is to use this
 %initial assembly to generate an optimum cluster of larger spheres to
 %represent the object for DEM simulations, the technique used is an improved 
-%Greedy Algorithm. More details can found in Haeri (2017) Powder Technology
+%Greedy Algorithm. More details can be found in Haeri (2017) Powder Technology
 %94-104.
 %--------------------------------------------------------------------------
 %INPUTS:
 %fileName: name of the STL file to be loaded. 
 %nNodes: number of nodes to be placed along each axis (e.g. start with 50).  
 %scaleFactor: scaling factor to normalise all coordinated in the STL file.
-%smoothFact: how much smoothing to apply to the surfce, this factor will
-%be multiplied by the cell radius to smoothout the surface, if 1. is chosen
+%smoothFact: how much smoothing to apply to the surface, this factor will
+%be multiplied by the cell radius to smooth out the surface, if 1. is chosen
 %then no smoothing and large number of spheres will be included in the
 %final cluster to represent surface roughness (3-5 seems to be reasonable,
 %see Haeri 2017 PowTech for more details. 
 %writeTec: if = 1 then will write tecplot/paraview files of all the cells, 
 %surface and internal cells and final cluster.
 %writeLammpsTemp: Write a molecule template for lammps
-%LammpsTypes: an integer value (the typew to be used in the lammps
+%LammpsTypes: an integer value (the type to be used in the lammps
 %template, see lammps documentation for more details)
 %writeStlScaled: if = 1, the scaled stl will be written
 %rho: assumed density of the particle
@@ -39,13 +39,14 @@ function [ assembly, masses, totVolSph, mI ] = populateSpheres( fileName, nNodes
 %--------------------------------------------------------------------------
 %OUTPUTS:
 %assembly: coordinate and the radius of the spheres in the final cluster
-%masses: mass of the each sphere in the final cluster, this is calculated
+%masses: mass of each sphere in the final cluster, this is calculated
 %based on the number of cells exclusively inside each sphere in the cluster
 % totVolSph: Volume of the cluster calculated based on the volume of the
 % cells, this is not the volume of the original stl, that volume will be
-% printed on the scree. 
-% mI: moment of intertia of the cluster
+% printed on the screen. 
+% mI: moment of inertia of the cluster
 %--------------------------------------------------------------------------
+
 
 [vertices,faces,~,~] = stlRead(fileName);
 
