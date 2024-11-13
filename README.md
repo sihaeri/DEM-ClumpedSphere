@@ -5,7 +5,7 @@ If any publication is resulted from using this code, please cite:
 
  1. Optimisation of blade type spreaders for powder bed preparation in additive manufacturing using DEM simulations
     **S. Haeri**
-    *Powder Technology Vol 321, pp. 94-104, (2017)
+    Powder Technology Vol 321, pp. 94-104, (2017)
     http://dx.doi.org/10.1016/j.powtec.2017.08.011
 
 ## Installation
